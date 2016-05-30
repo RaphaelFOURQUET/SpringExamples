@@ -12,6 +12,7 @@ import fr.adaming.services.collection.CustomerCollection;
 import fr.adaming.services.collection.CustomerRecupFromMapList;
 import fr.adaming.services.elexpression.CustomerEL;
 import fr.adaming.services.elexpression.CustomerMethodinvocation;
+import fr.adaming.services.regularexpression.CustomerRegularExpression;
 import fr.adaming.services.ternaire.CustomerTernaire;
 
 @SpringBootApplication
@@ -74,6 +75,10 @@ public class SpringConstructorInjectionApplication {
 //		<!-- Operateur ternaire -->
 		CustomerTernaire customerTernaire = (CustomerTernaire)context.getBean("customerTernaireBean");
 		System.out.println(customerTernaire);
+		
+		//Expression Reguliere
+		CustomerRegularExpression customerRegularExpression = (CustomerRegularExpression)context.getBean("customerRegExBean");
+		System.out.println(customerRegularExpression);
 		
 		
 		context.close();
