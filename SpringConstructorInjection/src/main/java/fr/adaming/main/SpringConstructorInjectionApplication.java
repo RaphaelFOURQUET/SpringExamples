@@ -9,6 +9,7 @@ import fr.adaming.services.CustomerHeritage;
 import fr.adaming.services.CustomerLifeCycle;
 import fr.adaming.services.CustomerService;
 import fr.adaming.services.autoscanning.CustomerAutoScanning;
+import fr.adaming.services.autowiring.CustomerAutoWiringByName;
 import fr.adaming.services.collection.CustomerCollection;
 import fr.adaming.services.collection.CustomerRecupFromMapList;
 import fr.adaming.services.elexpression.CustomerEL;
@@ -84,6 +85,10 @@ public class SpringConstructorInjectionApplication {
 		//Auto scanning : no bean in xml nor @Component("name")
 		CustomerAutoScanning customerAutoScanning = (CustomerAutoScanning)context.getBean("customerAutoScanning");
 		System.out.println(customerAutoScanning);
+		
+//		<!-- Auto Wiring By name-->
+		CustomerAutoWiringByName customerAutoWiringByName = (CustomerAutoWiringByName)context.getBean("customerAutoWiringByNameBean");
+		System.out.println(customerAutoWiringByName);
 		
 		
 		context.close();

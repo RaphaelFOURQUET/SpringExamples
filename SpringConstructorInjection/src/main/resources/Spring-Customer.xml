@@ -138,4 +138,21 @@
 		<property name="qtyOnHand" value="99" />
 	</bean>
 
+	<!-- Auto Wiring By name -->
+	<!-- <bean id="customer" class="com.mkyong.common.Customer">
+		<property name="address" ref="address" />
+	</bean>
+	<bean id="address" class="com.mkyong.common.Address">
+		<property name="fulladdress" value="Block A 888, CA" />
+	</bean> -->
+	
+	<!-- With autowire by name enabled, you do not need to declares the property taganymore.
+	As long as the “address” bean is same name as the property of “customer” bean, which is “address”,
+	Spring will wire it automatically. -->
+	
+<bean id="customerAutoWiringByNameBean" class="fr.adaming.services.autowiring.CustomerAutoWiringByName" autowire="byName" />
+	<bean id="address" class="fr.adaming.services.autowiring.Address">
+		<property name="fulladdress" value="Block A 888, CA" />
+	</bean>
+
 </beans>
