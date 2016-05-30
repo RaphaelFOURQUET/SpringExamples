@@ -5,10 +5,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import fr.adaming.entity.Customer;
 import fr.adaming.entity.Personne;
-import fr.adaming.services.CustomerCollection;
 import fr.adaming.services.CustomerHeritage;
 import fr.adaming.services.CustomerLifeCycle;
 import fr.adaming.services.CustomerService;
+import fr.adaming.services.collection.CustomerCollection;
+import fr.adaming.services.collection.CustomerRecupFromMapList;
 import fr.adaming.services.elexpression.CustomerEL;
 import fr.adaming.services.elexpression.CustomerMethodinvocation;
 import fr.adaming.services.ternaire.CustomerTernaire;
@@ -40,9 +41,12 @@ public class SpringConstructorInjectionApplication {
 		CustomerService custB = (CustomerService)context.getBean("customerService");
 		System.out.println("Message : " + custB.getMessage());
 		
-		
+		//collections
 		CustomerCollection custCollection = (CustomerCollection) context.getBean("CustomerCollectionBean");
 		System.out.println(custCollection);
+		//recup from collection Map List
+		CustomerRecupFromMapList customerRecupFromMapList = (CustomerRecupFromMapList) context.getBean("customerRecupFromMapListBean");
+		System.out.println(customerRecupFromMapList);
 		
 //		<!-- Bean par héritage -->
 		CustomerHeritage custHeritage = (CustomerHeritage)context.getBean("CustomerHeritageBean");
@@ -70,6 +74,7 @@ public class SpringConstructorInjectionApplication {
 //		<!-- Operateur ternaire -->
 		CustomerTernaire customerTernaire = (CustomerTernaire)context.getBean("customerTernaireBean");
 		System.out.println(customerTernaire);
+		
 		
 		context.close();
 	}

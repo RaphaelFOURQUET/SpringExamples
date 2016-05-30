@@ -35,7 +35,7 @@
 	<!-- <bean id="customerService" class="fr.adaming.services.CustomerService" 
 		/> -->
 
-	<bean id="CustomerCollectionBean" class="fr.adaming.services.CustomerCollection">
+	<bean id="CustomerCollectionBean" class="fr.adaming.services.collection.CustomerCollection">
 		<!-- java.util.List -->
 		<property name="lists">
 			<list>

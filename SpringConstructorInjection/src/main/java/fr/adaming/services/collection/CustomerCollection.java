@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.adaming.services;
+package fr.adaming.services.collection;
 
 import java.util.List;
 import java.util.Map;
