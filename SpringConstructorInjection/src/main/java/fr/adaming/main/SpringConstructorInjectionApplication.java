@@ -8,6 +8,7 @@ import fr.adaming.entity.Personne;
 import fr.adaming.services.CustomerHeritage;
 import fr.adaming.services.CustomerLifeCycle;
 import fr.adaming.services.CustomerService;
+import fr.adaming.services.autoscanning.CustomerAutoScanning;
 import fr.adaming.services.collection.CustomerCollection;
 import fr.adaming.services.collection.CustomerRecupFromMapList;
 import fr.adaming.services.elexpression.CustomerEL;
@@ -79,6 +80,10 @@ public class SpringConstructorInjectionApplication {
 		//Expression Reguliere
 		CustomerRegularExpression customerRegularExpression = (CustomerRegularExpression)context.getBean("customerRegExBean");
 		System.out.println(customerRegularExpression);
+		
+		//Auto scanning : no bean in xml nor @Component("name")
+		CustomerAutoScanning customerAutoScanning = (CustomerAutoScanning)context.getBean("customerAutoScanning");
+		System.out.println(customerAutoScanning);
 		
 		
 		context.close();
