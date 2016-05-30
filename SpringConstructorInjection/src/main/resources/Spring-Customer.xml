@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	<!-- Enable auto component scanning for annotated scope in .java -->
+	<context:component-scan base-package="fr.adaming.services" />
+
+	<!-- Injection par constructeur 3 parametres -->
+	<bean id="PersonneBean" class="fr.adaming.entity.Personne">
+		<constructor-arg type="java.lang.String">
+			<value>Toto</value>
+		</constructor-arg>
+		<constructor-arg type="java.lang.String">
+			<value>188</value>
+		</constructor-arg>
+		<constructor-arg type="int">
+			<value>28</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- Injection par constructeur sans parametres et utilisation des setteurs -->
+	<bean id="CustomerBean" class="fr.adaming.entity.Customer">
+		<property name="personne">
+			<bean class="fr.adaming.entity.Personne">
+				<property name="name" value="mkyong" />
+				<property name="address" value="address1" />
+				<property name="age" value="28" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- <bean id="customerService" class="fr.adaming.services.CustomerService" 
+		/> -->
+
+	<bean id="CustomerCollectionBean" class="fr.adaming.services.CustomerCollection">
+		<!-- java.util.List -->
+		<property name="lists">
+			<list>
+				<value>1</value>
+				<ref bean="PersonBean" />
+				<bean class="fr.adaming.entity.Personne">
+					<property name="name" value="mkyongList" />
+					<property name="address" value="address" />
+					<property name="age" value="28" />
+				</bean>
+			</list>
+		</property>
+		<!-- java.util.Set -->
+		<property name="sets">
+			<set>
+				<value>1</value>
+				<ref bean="PersonBean" />
+				<bean class="fr.adaming.entity.Personne">
+					<property name="name" value="mkyongSet" />
+					<property name="address" value="address" />
+					<property name="age" value="28" />
+				</bean>
+			</set>
+		</property>
+		<!-- java.util.Map -->
+		<property name="maps">
+			<map>
+				<entry key="Key 1" value="1" />
+				<entry key="Key 2" value-ref="PersonBean" />
+				<entry key="Key 3">
+					<bean class="fr.adaming.entity.Personne">
+						<property name="name" value="mkyongMap" />
+						<property name="address" value="address" />
+						<property name="age" value="28" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+		<!-- java.util.Properties -->
+		<property name="pros">
+			<props>
+				<prop key="admin">admin@nospam.com</prop>
+				<prop key="support">support@nospam.com</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="PersonBean" class="fr.adaming.entity.Personne">
+		<property name="name" value="mkyong1" />
+		<property name="address" value="address 1" />
+		<property name="age" value="28" />
+	</bean>
+
+	<!-- Bean par héritage -->
+	<bean id="BaseCustomerMalaysia" abstract="true">
+		<property name="country" value="Malaysia" />
+	</bean>
+	<bean id="CustomerHeritageBean" parent="BaseCustomerMalaysia"
+		class="fr.adaming.services.CustomerHeritage">
+		<property name="action" value="buy" />
+		<property name="type" value="1" />
+	</bean>
+	<!-- Override country -->
+	<bean id="CustomerHeritageBean2" parent="BaseCustomerMalaysia"
+		class="fr.adaming.services.CustomerHeritage">
+		<property name="country" value="France"></property>
+		<property name="action" value="buy" />
+		<property name="type" value="2" />
+	</bean>
+
+	<!-- Cycle de vie Bean par init-method and destroy-method dans le xml : 
+		autre solution par Spring @PostConstruct And @PreDestroy (mais dependances 
+		Spring) -->
+	<bean id="CustomerLifeCycle" class="fr.adaming.services.CustomerLifeCycle"
+		init-method="init" destroy-method="cleanUp">
+		<property name="message" value="i'm property message" />
+	</bean>
+
+	<!-- Spring EL Expression : On peut egalement passer par annotations -->
+	<bean id="itemElBean" class="fr.adaming.services.elexpression.ItemEL">
+		<property name="name" value="itemA" />
+		<property name="qty" value="10" />
+	</bean>
+	<bean id="customerElBean" class="fr.adaming.services.elexpression.CustomerEL">
+		<property name="itemEl" value="#{itemElBean}" />
+		<property name="itemName" value="#{itemElBean.name}" />
+	</bean>
+
+	<!-- Spring EL Expression par annotations -->
+	<bean id="itemElBean2" class="fr.adaming.services.elexpression.ItemEL">
+		<property name="name" value="itemB" />
+		<property name="qty" value="2" />
+	</bean>
+
+	<!-- Operateur ternaire -->
+	<bean id="customerTernaireBean" class="fr.adaming.services.ternaire.CustomerTernaire">
+		<property name="warning"
+			value="#{itemBean.qtyOnHand &lt; 100 ? true : false}" />
+	</bean>
+	<bean id="itemBean" class="fr.adaming.services.ternaire.ItemTernaire">
+		<property name="qtyOnHand" value="99" />
+	</bean>
+
+</beans>
