@@ -2,8 +2,12 @@ package fr.adaming.main;
 
 import java.io.IOException;
 
+import javax.sql.DataSource;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import fr.adaming.entity.Customer;
 import fr.adaming.entity.Personne;
@@ -29,11 +33,14 @@ import fr.adaming.services.toxml.XMLConverter;
 @SpringBootApplication
 public class SpringConstructorInjectionApplication {
 	
+	//private static final Logger logger = Logger.getLogger(SpringConstructorInjectionApplication.class);
 	private static final String XML_FILE_NAME = "src/main/resources/customerToXml.xml";
 
 	public static void main(String[] args) throws IOException {
 		//SpringApplication.run(SpringConstructorInjectionApplication.class, args);
 
+		//logger.setLevel(Level.ERROR);
+		
 		//Recuperation des Beans
 		ClassPathXmlApplicationContext context =
 				new ClassPathXmlApplicationContext("Spring-Customer.xml");
@@ -128,6 +135,19 @@ public class SpringConstructorInjectionApplication {
 		
 		
 //		<!-- JDBC + Spring -->
+		//Requete SQL de creation table
+		String creationTableSql = "CREATE TABLE `customer` (`CUST_ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,`NAME` VARCHAR(100) NOT NULL, "
+				+ "`AGE` INT(10) UNSIGNED NOT NULL, "
+				+ "PRIMARY KEY (`CUST_ID`))"
+				+ " ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;";
+		//envoyer requete
+		JdbcTemplate jdbcTemplate = new JdbcTemplate((DataSource) context.getBean("dataSource"));
+		try {
+			jdbcTemplate.execute(creationTableSql);
+		} catch(BadSqlGrammarException e) {	//Si customer existe deja
+			//do nothing
+		}
+		
 		JdbcCustomerDao JdbccustomerDAO = (JdbcCustomerDao) context.getBean("customerDaoBean");
 		CustomerJdbc customerJdbc = new CustomerJdbc(1, "Raphz",26);
 		CustomerJdbc customerJdbc1;
