@@ -40,6 +40,12 @@ public class CustomerJdbc {
 	public CustomerJdbc() {
 		
 	}
+	
+	public CustomerJdbc(String name, int age) {
+		super();
+		this.name = name;
+		this.age = age;
+	}
 
 	public CustomerJdbc(int custId, String name, int age) {
 		super();

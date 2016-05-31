@@ -176,6 +176,8 @@ public class SpringConstructorInjectionApplication {
 			customerJdbcS1 = jdbcCustomerDaoSupport.findByCustomerId(3);
 		}
 		System.out.println(customerJdbcS1);
+		
+		//jdbcCustomerDaoSupport.insert(new CustomerJdbc("R",20));	//Test id autoIncrémenté.
 
 		context.close();
 	}
