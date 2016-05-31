@@ -128,12 +128,12 @@ public class SpringConstructorInjectionApplication {
 //		<!-- JDBC + Spring -->
 		JdbcCustomerDao JdbccustomerDAO = (JdbcCustomerDao) context.getBean("customerDaoBean");
 		CustomerJdbc customerJdbc = new CustomerJdbc(1, "Raphz",26);
-		CustomerJdbc customer1;
-		if((customer1=JdbccustomerDAO.findByCustomerId(1)) == null) {	//On ne remet pas si déja présent en BD
+		CustomerJdbc customerJdbc1;
+		if((customerJdbc1=JdbccustomerDAO.findByCustomerId(1)) == null) {	//On ne remet pas si déja présent en BD pour éviter un probleme d'unicite d id
 			JdbccustomerDAO.insert(customerJdbc);
-			customer1 = JdbccustomerDAO.findByCustomerId(1);
+			customerJdbc1 = JdbccustomerDAO.findByCustomerId(1);
 		}
-		System.out.println(customer1);
+		System.out.println(customerJdbc1);
 
 
 		context.close();
