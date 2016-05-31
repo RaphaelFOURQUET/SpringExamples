@@ -129,9 +129,10 @@ public class SpringConstructorInjectionApplication {
 		JdbcCustomerDao JdbccustomerDAO = (JdbcCustomerDao) context.getBean("customerDaoBean");
 		CustomerJdbc customerJdbc = new CustomerJdbc(1, "Raphz",26);
 		CustomerJdbc customer1;
-		if(JdbccustomerDAO.findByCustomerId(1) == null)	//On ne remet pas si déja présent en BD
+		if((customer1=JdbccustomerDAO.findByCustomerId(1)) == null) {	//On ne remet pas si déja présent en BD
 			JdbccustomerDAO.insert(customerJdbc);
-		customer1 = JdbccustomerDAO.findByCustomerId(1);
+			customer1 = JdbccustomerDAO.findByCustomerId(1);
+		}
 		System.out.println(customer1);
 
 
