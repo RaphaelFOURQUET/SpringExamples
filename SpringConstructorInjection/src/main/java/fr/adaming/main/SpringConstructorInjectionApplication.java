@@ -17,6 +17,8 @@ import fr.adaming.services.collection.CustomerCollection;
 import fr.adaming.services.collection.CustomerRecupFromMapList;
 import fr.adaming.services.elexpression.CustomerEL;
 import fr.adaming.services.elexpression.CustomerMethodinvocation;
+import fr.adaming.services.jdbc.CustomerJdbc;
+import fr.adaming.services.jdbc.JdbcCustomerDao;
 import fr.adaming.services.regularexpression.CustomerRegularExpression;
 import fr.adaming.services.ternaire.CustomerTernaire;
 import fr.adaming.services.toxml.CustomerToXml;
@@ -121,6 +123,16 @@ public class SpringConstructorInjectionApplication {
 		CustomerToXml customerToXml2 = (CustomerToXml)converter.convertFromXMLToObject(XML_FILE_NAME);
 		System.out.println(customerToXml2);
 		System.out.println("Done");
+		
+		
+//		<!-- JDBC + Spring -->
+		JdbcCustomerDao JdbccustomerDAO = (JdbcCustomerDao) context.getBean("customerDaoBean");
+		CustomerJdbc customerJdbc = new CustomerJdbc(1, "Raphz",26);
+		CustomerJdbc customer1;
+		if(JdbccustomerDAO.findByCustomerId(1) == null)	//On ne remet pas si déja présen en BD
+			JdbccustomerDAO.insert(customerJdbc);
+		customer1 = JdbccustomerDAO.findByCustomerId(1);
+		System.out.println(customer1);
 
 
 		context.close();
