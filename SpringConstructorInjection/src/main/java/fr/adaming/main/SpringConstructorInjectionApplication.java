@@ -19,6 +19,8 @@ import fr.adaming.services.elexpression.CustomerEL;
 import fr.adaming.services.elexpression.CustomerMethodinvocation;
 import fr.adaming.services.jdbc.CustomerJdbc;
 import fr.adaming.services.jdbc.JdbcCustomerDao;
+import fr.adaming.services.jdbc.JdbcCustomerDaoSupport;
+import fr.adaming.services.jdbc.JdbcTemplateCustomerDao;
 import fr.adaming.services.regularexpression.CustomerRegularExpression;
 import fr.adaming.services.ternaire.CustomerTernaire;
 import fr.adaming.services.toxml.CustomerToXml;
@@ -134,7 +136,26 @@ public class SpringConstructorInjectionApplication {
 			customerJdbc1 = JdbccustomerDAO.findByCustomerId(1);
 		}
 		System.out.println(customerJdbc1);
-
+		
+		//JDBC+Spring par JdbcTemplate			JdbcTemplateCustomerDao
+		JdbcTemplateCustomerDao jdbcTemplateCustomerDao = (JdbcTemplateCustomerDao) context.getBean("customerTemplateDaoBean");
+		CustomerJdbc customerJdbcT = new CustomerJdbc(2, "Raphz90",26);
+		CustomerJdbc customerJdbcT1;
+		if((customerJdbcT1=jdbcTemplateCustomerDao.findByCustomerId(2)) == null) {	//On ne remet pas si déja présent en BD pour éviter un probleme d'unicite d id
+			jdbcTemplateCustomerDao.insert(customerJdbcT);
+			customerJdbcT1 = jdbcTemplateCustomerDao.findByCustomerId(2);
+		}
+		System.out.println(customerJdbcT1);
+		
+//		<!-- JDBC+Spring par JdbcDaoSupport -->					JdbcCustomerDaoSupport
+		JdbcCustomerDaoSupport jdbcCustomerDaoSupport = (JdbcCustomerDaoSupport) context.getBean("customerDAOSupportBean");
+		CustomerJdbc customerJdbcS = new CustomerJdbc(3, "Rafz",26);
+		CustomerJdbc customerJdbcS1;
+		if((customerJdbcS1=jdbcCustomerDaoSupport.findByCustomerId(3)) == null) {	//On ne remet pas si déja présent en BD pour éviter un probleme d'unicite d id
+			jdbcCustomerDaoSupport.insert(customerJdbcS);
+			customerJdbcS1 = jdbcCustomerDaoSupport.findByCustomerId(3);
+		}
+		System.out.println(customerJdbcS1);
 
 		context.close();
 	}

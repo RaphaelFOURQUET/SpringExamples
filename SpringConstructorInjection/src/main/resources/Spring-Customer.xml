@@ -191,6 +191,16 @@
 		<property name="password" value="" />
 	</bean>
 
+	<!-- JDBC+Spring par JdbcTemplate -->
+	<bean id="customerTemplateDaoBean" class="fr.adaming.services.jdbc.JdbcTemplateCustomerDao">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- JDBC+Spring par JdbcDaoSupport -->
+	<bean id="customerDAOSupportBean" class="fr.adaming.services.jdbc.JdbcCustomerDaoSupport">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
 
 
 </beans>
