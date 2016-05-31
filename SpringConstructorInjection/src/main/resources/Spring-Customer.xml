@@ -156,7 +156,8 @@
 	<!-- AutoWiring by annotation -->
 	<context:annotation-config />
 
-	<bean id="customerAutoWiringByAnnotationBean" class="fr.adaming.services.autowiring.CustomerAutoWiringByAnnotation">
+	<bean id="customerAutoWiringByAnnotationBean"
+		class="fr.adaming.services.autowiring.CustomerAutoWiringByAnnotation">
 		<property name="action" value="buy" />
 		<property name="type" value="1" />
 	</bean>
@@ -164,6 +165,17 @@
 		<property name="name" value="Raphael" />
 		<property name="address" value="address ABC" />
 		<property name="age" value="26" />
+	</bean>
+
+
+	<!-- XML conversion via Spring oxm -->
+	<bean id="XMLConverter" class="fr.adaming.services.toxml.XMLConverter">
+		<property name="marshaller" ref="castorMarshaller" />
+		<property name="unmarshaller" ref="castorMarshaller" />
+	</bean>
+	<bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller">
+		<property name="targetClass" value="fr.adaming.services.toxml.CustomerToXml"/>
+		<property name="mappingLocation" value="classpath:mapping.xml" />
 	</bean>
 
 
